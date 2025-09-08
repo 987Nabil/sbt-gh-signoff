@@ -1,1 +1,1 @@
-// (Intentionally minimal; user can add scalafmt / scalafix plugins in consuming build)
+addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.5.12")

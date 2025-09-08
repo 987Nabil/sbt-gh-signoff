@@ -7,6 +7,8 @@ project/project/
 .idea/
 .vscode/
 *.iml
+.bsp
+.idea
 
 # Logs
 *.log

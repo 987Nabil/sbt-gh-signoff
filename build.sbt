@@ -1,14 +1,32 @@
-ThisBuild / organization := "com.example"
-ThisBuild / version      := "0.1.0"
-ThisBuild / scalaVersion := "2.13.12"
-ThisBuild / licenses     := Seq("The Unlicense" -> url("https://unlicense.org"))
-ThisBuild / homepage     := Some(url("https://github.com/987Nabil/sbt-gh-signoff"))
+import sbt.*
+import Keys.*
+
+ThisBuild / organization := "io.github.987nabil"
+ThisBuild / organizationName := "Nabil Abdel-Hafeez"
+ThisBuild / homepage := Some(url("https://github.com/987Nabil/sbt-signoff"))
+
+// sbt 1.x plugins must use Scala 2.12 (match the sbt launcher Scala version)
+ThisBuild / scalaVersion := "2.12.19"
+
+ThisBuild / licenses := Seq("Unlicense" -> url("https://unlicense.org/"))
+
+ThisBuild / developers += Developer(
+  id = "987Nabil",
+  name = "Nabil Abdel-Hafeez",
+  email = "987.nabil@gmail.com",
+  url = url("https://github.com/987Nabil")
+  )
+
+// Publishing configuration for sbt-ci-release
+ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
+ThisBuild / sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 
 lazy val root = (project in file("."))
-  .enablePlugins(SbtPlugin)
+  .enablePlugins(sbt.plugins.JvmPlugin, ScriptedPlugin, CiReleasePlugin)
   .settings(
     name := "sbt-signoff",
-    description := "Local-only signoff status + quality aggregator plugin",
-    scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked"),
-    libraryDependencies ++= Nil,
-  )
+    sbtPlugin := true,
+    description := "sbt plugin to auto-run scalafmt/scalafix/wartremover and apply GitHub signoff statuses",
+    )
+
+Global / onChangedBuildSource := ReloadOnSourceChanges
